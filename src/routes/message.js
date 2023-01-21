@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
   return res.send(message);
 });
 
-app.put('/messages/:messageId', (req, res) => {
+router.put('/messages/:messageId', (req, res) => {
     const newMessage = {
         id: req.params.messageId,
         text: req.body.text,

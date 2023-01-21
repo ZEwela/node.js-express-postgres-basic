@@ -10,11 +10,11 @@ router.get('/:userId', (req, res) => {
   return res.send(req.context.models.users[req.params.userId]);
 });
 
-app.put('/:userId', (req, res) => {
+router.put('/:userId', (req, res) => {
     return res.send(`Received a PUT HTTP method on user/${req.params.userId} resource`);
 });
 
-app.delete('/:userId', (req, res) => {
+router.delete('/:userId', (req, res) => {
     const {
       [req.params.userId]: user,
       ...otherUsers
