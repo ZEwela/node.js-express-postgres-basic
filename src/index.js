@@ -21,10 +21,10 @@ app.use(express.urlencoded({ extended: true }));
 // sending the request. In the following case, the authenticated user is the user 
 // with the identifier 1 which gets assigned as me property to the request object 
 // -application-level
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
     req.context = {
         models,
-        me: models.users[1],
+        me: await models.User.findByLogin('rwieruch'),
     };
     next();
 });

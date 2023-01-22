@@ -2,26 +2,24 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  return res.send(Object.values(req.context.models.users));
+router.get('/', async (req, res) => {
+  const users = await req.context.models.User.findAll();
+
+  return res.send(users);
 });
 
-router.get('/:userId', (req, res) => {
-  return res.send(req.context.models.users[req.params.userId]);
+router.get('/:userId', async (req, res) => {
+  const user = await req.context.models.User.findByPk(
+    req.params.userId,
+  );
+  return res.send(user);
 });
 
-router.put('/:userId', (req, res) => {
-    return res.send(`Received a PUT HTTP method on user/${req.params.userId} resource`);
-});
-
-router.delete('/:userId', (req, res) => {
-    const {
-      [req.params.userId]: user,
-      ...otherUsers
-    } = req.context.models.users;
-    
-    req.context.models.users = otherUsers;
-    return res.send(user);
+router.delete('/:userId', async (req, res) => {
+  const result = await req.context.models.User.destroy({
+    where: { id: req.params.userId }
+  });
+    return res.send(true);
 });
 
 export default router;
